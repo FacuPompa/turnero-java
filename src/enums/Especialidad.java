@@ -1,0 +1,15 @@
+package src.enums;
+
+public enum Especialidad {
+    CLINICA_MEDICA,
+    PEDIATRIA,
+    CARDIOLOGIA,
+    DERMATOLOGIA,
+    GINECOLOGIA,
+    NEUROLOGIA,
+    ORTOPEDIA,
+    PSIQUIATRIA,
+    OTORRINOLARINGOLOGIA,
+    UROLOGIA,
+    GASTROENTEROLOGIA
+}
