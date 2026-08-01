@@ -37,13 +37,28 @@ public class Main {
                         String apellidoMedico = ScannerUtils.leerTexto("Ingrese el apellido del medico");
                         Especialidad especialidad = ScannerUtils.leerEspecialidad("Ingrese la especialidad del medico");
                         int idMedico = ScannerUtils.leerEntero("Ingrese el ID del medico");
+                        
                         Medico medico = new Medico(nombreMedico, apellidoMedico, especialidad, idMedico);
                         centroMedico.agregarMedico(medico);
+
                         System.out.println("Medico registrado exitosamente.");
                         break;
 
                     case MOSTRAR_MEDICOS:
                         centroMedico.mostrarMedicos();
+                        break;
+
+                    case REGISTRAR_PACIENTE:
+                        String nombrePaciente = ScannerUtils.leerTexto("Ingrese el nombre del paciente");
+                        String apellidoPaciente = ScannerUtils.leerTexto("Ingrese el apellido del paciente");
+                        String emailPaciente = ScannerUtils.leerTexto("Ingrese el email del paciente");
+                        String telefonoPaciente = ScannerUtils.leerTexto("Ingrese el telefono del paciente (+549 ...)");
+                        int idPaciente = ScannerUtils.leerEntero("Ingrese el ID del paciente");
+
+                        Paciente paciente = new Paciente(nombrePaciente, apellidoPaciente, emailPaciente, telefonoPaciente, idPaciente);
+                        centroMedico.agregarPaciente(paciente);
+
+                        System.out.println("Paciente registrado exitosamente.");
                         break;
                     case MOSTRAR_PACIENTES:
                         centroMedico.mostrarPacientes();
