@@ -63,6 +63,31 @@ public class Main {
                     case MOSTRAR_PACIENTES:
                         centroMedico.mostrarPacientes();
                         break;
+
+                    case REGISTRAR_TURNO:
+                        int idMedicoTurno = ScannerUtils.leerEntero("Ingrese el ID del médico para el turno");
+                        Medico medicoTurno = centroMedico.buscarMedico(idMedicoTurno);
+                            if (medicoTurno == null) {
+                                System.out.println("No se encontró un médico con el ID proporcionado.");
+                                break;
+                            }
+                        int idPacienteTurno = ScannerUtils.leerEntero("Ingrese el ID del paciente para el turno");
+                        Paciente pacienteTurno = centroMedico.buscarPaciente(idPacienteTurno);
+                            if (pacienteTurno == null) {
+                                System.out.println("No se encontró un paciente con el ID proporcionado.");
+                                break;
+                            }
+                        LocalDate fechaTurno = ScannerUtils.leerFecha("Ingrese la fecha del turno (AAAA-MM-DD)");
+                        LocalTime horaTurno = ScannerUtils.leerHora("Ingrese la hora del turno (HH:MM)");
+                        int idTurno = ScannerUtils.leerEntero("Ingrese el ID del turno");
+
+                        Turno turno = new Turno(fechaTurno, horaTurno, medicoTurno, pacienteTurno, idTurno);
+
+                        centroMedico.agregarTurno(turno);
+
+                        System.out.println("Turno registrado exitosamente.");
+                        break;
+
                     case MOSTRAR_TURNOS:
                         centroMedico.mostrarTurnos();
                         break;
