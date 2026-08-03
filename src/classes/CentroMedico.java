@@ -36,4 +36,18 @@ public class CentroMedico {
     public void mostrarTurnos () {
         turnos.forEach(turno -> System.out.println(turno.getFecha() + " | " + turno.getHora() + " | " + turno.getMedico().getNombre() + " | " + turno.getPaciente().getNombre() + " | " + turno.getEstadoTurno()));
     }
+
+    public Medico buscarMedico(int idMedico) {
+        return medicos.stream()
+                .filter(medico -> medico.getIdMedico() == idMedico)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Paciente buscarPaciente (int idPaciente) {
+        return pacientes.stream()
+                .filter(paciente -> paciente.getIdPaciente() == idPaciente)
+                .findFirst()
+                .orElse(null);
+    }
 }

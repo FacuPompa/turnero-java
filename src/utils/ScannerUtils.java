@@ -1,5 +1,7 @@
 package src.utils;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 import src.enums.Especialidad;
@@ -36,6 +38,32 @@ public class ScannerUtils {
                 return Especialidad.valueOf(entrada.toUpperCase());
             } catch (IllegalArgumentException e){
                 System.out.println("Especialidad inválida." + mensaje + ":");
+            }
+        }
+    }
+
+    public static LocalDate leerFecha(String mensaje) {
+        System.out.println("Formato: AAAA-MM-DD");
+        System.out.println(mensaje + ": ");
+        while (true) {
+            String fechaStr = SCANNER.nextLine();
+            try {
+                return LocalDate.parse(fechaStr);
+            } catch (Exception e) {
+                System.out.println("Fecha inválida. Por favor, ingrese una fecha en el formato AAAA-MM-DD.");
+            }
+        }
+    }
+
+    public static LocalTime leerHora(String mensaje) {
+        System.out.println("Formato: HH:MM");
+        System.out.println(mensaje + ": ");
+        while (true) {
+            String horaStr = SCANNER.nextLine();
+            try {
+                return LocalTime.parse(horaStr);
+            } catch (Exception e) {
+                System.out.println("Hora inválida. Por favor, ingrese una hora en el formato HH:MM.");
             }
         }
     }
