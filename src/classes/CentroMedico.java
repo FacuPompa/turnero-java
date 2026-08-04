@@ -30,7 +30,17 @@ public class CentroMedico {
     }
 
     public void agregarTurno(Turno turno) {
+        boolean horarioOcupado = turnos.stream()
+                .anyMatch(t -> t.getFecha().equals(turno.getFecha())
+                        && t.getHora().equals(turno.getHora())
+                        && t.getMedico().getIdMedico() == turno.getMedico().getIdMedico());
+
+        if (horarioOcupado) {
+            System.out.println("El médico ya tiene un turno asignado en esa fecha y hora.");
+            return;
+        }
         turnos.add(turno);
+        System.out.println("Turno registrado exitosamente.");
     }
 
     public void mostrarTurnos () {

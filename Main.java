@@ -1,4 +1,3 @@
-import java.util.*;
 import java.time.*;
 import src.classes.*;
 import src.enums.*;
@@ -84,8 +83,6 @@ public class Main {
                         Turno turno = new Turno(fechaTurno, horaTurno, medicoTurno, pacienteTurno, idTurno);
 
                         centroMedico.agregarTurno(turno);
-
-                        System.out.println("Turno registrado exitosamente.");
                         break;
 
                     case MOSTRAR_TURNOS:
