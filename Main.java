@@ -2,6 +2,7 @@ import java.time.*;
 import src.classes.*;
 import src.enums.*;
 import src.utils.ScannerUtils;
+import src.exceptions.*;
 
 
 public class Main {
@@ -14,6 +15,7 @@ public class Main {
     public static final int SALIR = 10;
     public static void main(String[] args) {
         CentroMedico centroMedico = new CentroMedico();
+        cargarDatosIniciales(centroMedico);
 
         while(true) {
             System.out.println("\nBienvenido al centro medico.\n");
@@ -82,7 +84,11 @@ public class Main {
 
                         Turno turno = new Turno(fechaTurno, horaTurno, medicoTurno, pacienteTurno, idTurno);
 
-                        centroMedico.agregarTurno(turno);
+                        try {
+                            centroMedico.agregarTurno(turno);
+                        } catch (TurnoNoDisponibleException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
 
                     case MOSTRAR_TURNOS:
@@ -96,5 +102,15 @@ public class Main {
                         break;
             }
         }
+    }
+
+    private static void cargarDatosIniciales(CentroMedico centroMedico) {
+        Medico medico = new Medico("Ana", "Gomez", Especialidad.CLINICA_MEDICA, 1);
+        Paciente paciente = new Paciente("Juan", "Perez", "juan.perez@email.com", "+54 9 266 4000000", 1);
+        Turno turno = new Turno(LocalDate.now(), LocalTime.of(17, 30), medico, paciente, 1);
+
+        centroMedico.agregarMedico(medico);
+        centroMedico.agregarPaciente(paciente);
+        centroMedico.agregarTurno(turno);
     }
 }
