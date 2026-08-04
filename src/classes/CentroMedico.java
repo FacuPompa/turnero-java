@@ -1,6 +1,7 @@
 package src.classes;
 
 import java.util.*;
+import src.exceptions.TurnoNoDisponibleException;
 
 public class CentroMedico {
     private List<Medico> medicos;
@@ -36,9 +37,9 @@ public class CentroMedico {
                         && t.getMedico().getIdMedico() == turno.getMedico().getIdMedico());
 
         if (horarioOcupado) {
-            System.out.println("El médico ya tiene un turno asignado en esa fecha y hora.");
-            return;
+            throw new TurnoNoDisponibleException();
         }
+        
         turnos.add(turno);
         System.out.println("Turno registrado exitosamente.");
     }
