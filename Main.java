@@ -12,6 +12,7 @@ public class Main {
     public static final int MOSTRAR_PACIENTES = 4;
     public static final int REGISTRAR_TURNO = 5;
     public static final int MOSTRAR_TURNOS = 6;
+    public static final int CANCELAR_TURNO = 7;
     public static final int SALIR = 10;
     public static void main(String[] args) {
         CentroMedico centroMedico = new CentroMedico();
@@ -27,6 +28,7 @@ public class Main {
                     4. Mostrar pacientes
                     5. Registrar turno
                     6. Mostrar turnos
+                    7. Cancelar turno
                     10. Salir
                     """);
 
@@ -93,6 +95,15 @@ public class Main {
 
                     case MOSTRAR_TURNOS:
                         centroMedico.mostrarTurnos();
+                        break;
+
+                    case CANCELAR_TURNO:
+                        int idTurnoCancelar = ScannerUtils.leerEntero("Ingrese el ID del turno a cancelar");
+                        if (centroMedico.cancelarTurno(idTurnoCancelar)) {
+                            System.out.println("Turno cancelado exitosamente.");
+                        } else {
+                            System.out.println("No se encontró un turno con el ID proporcionado.");
+                        }
                         break;
                     case SALIR:
                         System.out.println("Saliendo del programa...");

@@ -2,6 +2,7 @@ package src.classes;
 
 import java.util.*;
 import src.exceptions.TurnoNoDisponibleException;
+import src.enums.EstadoTurno;
 
 public class CentroMedico {
     private List<Medico> medicos;
@@ -60,5 +61,23 @@ public class CentroMedico {
                 .filter(paciente -> paciente.getIdPaciente() == idPaciente)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public Turno buscarTurno(int idTurno) {
+        return turnos.stream()
+                .filter(turno -> turno.getIdTurno() == idTurno)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public boolean cancelarTurno(int idTurno) {
+        Turno turno = buscarTurno(idTurno);
+        
+        if (turno == null) {
+            return false;
+        }
+
+        turno.setEstadoTurno(EstadoTurno.CANCELADO);
+        return true;
     }
 }
