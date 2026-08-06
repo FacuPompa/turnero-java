@@ -13,6 +13,8 @@ public class Main {
     public static final int REGISTRAR_TURNO = 5;
     public static final int MOSTRAR_TURNOS = 6;
     public static final int CANCELAR_TURNO = 7;
+    public static final int MARCAR_TURNO_ATENDIDO = 8;
+    public static final int MOSTRAR_TURNOS_PENDIENTES = 9;
     public static final int SALIR = 10;
     public static void main(String[] args) {
         CentroMedico centroMedico = new CentroMedico();
@@ -29,6 +31,8 @@ public class Main {
                     5. Registrar turno
                     6. Mostrar turnos
                     7. Cancelar turno
+                    8. Marcar turno atendido
+                    9. Mostrar turnos pendientes
                     10. Salir
                     """);
 
@@ -105,6 +109,24 @@ public class Main {
                             System.out.println("No se encontró un turno con el ID proporcionado.");
                         }
                         break;
+
+                    case MARCAR_TURNO_ATENDIDO:
+                        int idTurnoAtendido = ScannerUtils.leerEntero("Ingrese el ID del turno a marcar como atendido");
+                        try {
+                            if (centroMedico.marcarTurnoAtendido(idTurnoAtendido)) {
+                                System.out.println("Turno marcado como atendido exitosamente.");
+                            } else {
+                                System.out.println("No se encontró un turno con el ID proporcionado.");
+                            }
+                        } catch (EstadoTurnoInvalidoException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+
+                    case MOSTRAR_TURNOS_PENDIENTES:
+                        centroMedico.mostrarTurnosPendientes();
+                        break;
+
                     case SALIR:
                         System.out.println("Saliendo del programa...");
                         return;

@@ -1,6 +1,7 @@
 package src.classes;
 
 import java.util.*;
+import src.exceptions.EstadoTurnoInvalidoException;
 import src.exceptions.TurnoNoDisponibleException;
 import src.enums.EstadoTurno;
 
@@ -79,5 +80,26 @@ public class CentroMedico {
 
         turno.setEstadoTurno(EstadoTurno.CANCELADO);
         return true;
+    }
+
+    public boolean marcarTurnoAtendido(int idTurno) {
+        Turno turno = buscarTurno(idTurno);
+        
+        if (turno == null) {
+            return false;
+        }
+
+        if (turno.getEstadoTurno() == EstadoTurno.ATENDIDO) {
+            throw new EstadoTurnoInvalidoException("El turno ya estaba marcado como atendido.");
+        }
+
+        turno.setEstadoTurno(EstadoTurno.ATENDIDO);
+        return true;
+    }
+
+    public void mostrarTurnosPendientes() {
+        turnos.stream()
+                .filter(turno -> turno.getEstadoTurno() == EstadoTurno.PENDIENTE)
+                .forEach(turno -> System.out.println(turno.getFecha() + " | " + turno.getHora() + " | " + turno.getMedico().getNombre() + " | " + turno.getPaciente().getNombre()));
     }
 }
