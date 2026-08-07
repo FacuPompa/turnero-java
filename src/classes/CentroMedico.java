@@ -2,6 +2,7 @@ package src.classes;
 
 import java.util.*;
 import src.exceptions.EstadoTurnoInvalidoException;
+import src.exceptions.IdDuplicadoException;
 import src.exceptions.TurnoNoDisponibleException;
 import src.enums.EstadoTurno;
 
@@ -17,19 +18,37 @@ public class CentroMedico {
     }
 
     public void agregarMedico(Medico medico) {
+        if (buscarMedico(medico.getIdMedico()) != null) {
+            throw new IdDuplicadoException("médico", medico.getIdMedico());
+        }
+
         medicos.add(medico);
     }
 
     public void mostrarMedicos() {
-        medicos.forEach(medico -> System.out.println(medico.getNombre() + " | " + medico.getApellido() + " | " + medico.getEspecialidad()));
+        medicos.forEach(medico -> System.out.println(
+                "ID: " + medico.getIdMedico()
+                        + " | " + medico.getNombre()
+                        + " | " + medico.getApellido()
+                        + " | " + medico.getEspecialidad()
+        ));
     }
 
     public void agregarPaciente(Paciente paciente) {
+        if (buscarPaciente(paciente.getIdPaciente()) != null) {
+            throw new IdDuplicadoException("paciente", paciente.getIdPaciente());
+        }
+
         pacientes.add(paciente);
     }
 
     public void mostrarPacientes() {
-        pacientes.forEach(paciente -> System.out.println(paciente.getNombre() + " | " + paciente.getApellido() + " | " + paciente.getEmail()));
+        pacientes.forEach(paciente -> System.out.println(
+                "ID: " + paciente.getIdPaciente()
+                        + " | " + paciente.getNombre()
+                        + " | " + paciente.getApellido()
+                        + " | " + paciente.getEmail()
+        ));
     }
 
     public List<Turno> obtenerTurnos() {
@@ -45,6 +64,10 @@ public class CentroMedico {
     }
 
     public void agregarTurno(Turno turno) {
+        if (buscarTurno(turno.getIdTurno()) != null) {
+            throw new IdDuplicadoException("turno", turno.getIdTurno());
+        }
+
         boolean horarioOcupado = turnos.stream()
                 .anyMatch(t -> t.getFecha().equals(turno.getFecha())
                         && t.getHora().equals(turno.getHora())
@@ -55,11 +78,17 @@ public class CentroMedico {
         }
         
         turnos.add(turno);
-        System.out.println("Turno registrado exitosamente.");
     }
 
     public void mostrarTurnos () {
-        turnos.forEach(turno -> System.out.println(turno.getFecha() + " | " + turno.getHora() + " | " + turno.getMedico().getNombre() + " | " + turno.getPaciente().getNombre() + " | " + turno.getEstadoTurno()));
+        turnos.forEach(turno -> System.out.println(
+                "ID: " + turno.getIdTurno()
+                        + " | " + turno.getFecha()
+                        + " | " + turno.getHora()
+                        + " | " + turno.getMedico().getNombre()
+                        + " | " + turno.getPaciente().getNombre()
+                        + " | " + turno.getEstadoTurno()
+        ));
     }
 
     public Medico buscarMedico(int idMedico) {
@@ -112,6 +141,12 @@ public class CentroMedico {
     public void mostrarTurnosPendientes() {
         turnos.stream()
                 .filter(turno -> turno.getEstadoTurno() == EstadoTurno.PENDIENTE)
-                .forEach(turno -> System.out.println(turno.getFecha() + " | " + turno.getHora() + " | " + turno.getMedico().getNombre() + " | " + turno.getPaciente().getNombre()));
+                .forEach(turno -> System.out.println(
+                        "ID: " + turno.getIdTurno()
+                                + " | " + turno.getFecha()
+                                + " | " + turno.getHora()
+                                + " | " + turno.getMedico().getNombre()
+                                + " | " + turno.getPaciente().getNombre()
+                ));
     }
 }

@@ -10,8 +10,32 @@ public class ScannerUtils {
     public static final Scanner SCANNER = new Scanner(System.in);
 
     public static String leerTexto(String mensaje) {
-        System.out.println(mensaje + ": ");
-        return SCANNER.nextLine();
+        while (true) {
+            System.out.println(mensaje + ": ");
+            String texto = SCANNER.nextLine().trim();
+
+            if (!texto.isBlank()) {
+                return texto;
+            }
+
+            System.out.println("Este campo es obligatorio. Ingrese un valor.");
+        }
+    }
+
+    public static String leerEmail(String mensaje) {
+        while (true) {
+            String email = leerTexto(mensaje).trim();
+            int posicionArroba = email.indexOf("@");
+            int posicionCom = email.toLowerCase().lastIndexOf(".com");
+
+            if (posicionArroba > 0
+                    && posicionCom > posicionArroba + 1
+                    && posicionCom == email.length() - 4) {
+                return email;
+            }
+
+            System.out.println("Email inválido. Debe incluir @ y terminar en .com.");
+        }
     }
 
     public static int leerEntero(String mensaje) {
