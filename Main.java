@@ -1,5 +1,4 @@
 import java.time.*;
-import java.util.List;
 
 import src.classes.*;
 import src.enums.*;
@@ -55,10 +54,13 @@ public class Main {
                         int idMedico = ScannerUtils.leerEntero("Ingrese el ID del medico");
                         
                         Medico medico = new Medico(nombreMedico, apellidoMedico, especialidad, idMedico);
-                        centroMedico.agregarMedico(medico);
-                        FileUtils.guardarMedico(medico);
-
-                        System.out.println("Medico registrado exitosamente.");
+                        try {
+                            centroMedico.agregarMedico(medico);
+                            FileUtils.guardarMedico(medico);
+                            System.out.println("Medico registrado exitosamente.");
+                        } catch (IdDuplicadoException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
 
                     case MOSTRAR_MEDICOS:
@@ -68,15 +70,18 @@ public class Main {
                     case REGISTRAR_PACIENTE:
                         String nombrePaciente = ScannerUtils.leerTexto("Ingrese el nombre del paciente");
                         String apellidoPaciente = ScannerUtils.leerTexto("Ingrese el apellido del paciente");
-                        String emailPaciente = ScannerUtils.leerTexto("Ingrese el email del paciente");
+                        String emailPaciente = ScannerUtils.leerEmail("Ingrese el email del paciente");
                         String telefonoPaciente = ScannerUtils.leerTexto("Ingrese el telefono del paciente (+549 ...)");
                         int idPaciente = ScannerUtils.leerEntero("Ingrese el ID del paciente");
 
                         Paciente paciente = new Paciente(nombrePaciente, apellidoPaciente, emailPaciente, telefonoPaciente, idPaciente);
-                        centroMedico.agregarPaciente(paciente);
-                        FileUtils.guardarPaciente(paciente);
-
-                        System.out.println("Paciente registrado exitosamente.");
+                        try {
+                            centroMedico.agregarPaciente(paciente);
+                            FileUtils.guardarPaciente(paciente);
+                            System.out.println("Paciente registrado exitosamente.");
+                        } catch (IdDuplicadoException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case MOSTRAR_PACIENTES:
                         centroMedico.mostrarPacientes();
@@ -104,7 +109,8 @@ public class Main {
                         try {
                             centroMedico.agregarTurno(turno);
                             FileUtils.guardarTurnos(centroMedico.obtenerTurnos());
-                        } catch (TurnoNoDisponibleException e) {
+                            System.out.println("Turno registrado exitosamente.");
+                        } catch (TurnoNoDisponibleException | IdDuplicadoException e) {
                             System.out.println(e.getMessage());
                         }
                         break;
