@@ -32,6 +32,10 @@ public class CentroMedico {
         pacientes.forEach(paciente -> System.out.println(paciente.getNombre() + " | " + paciente.getApellido() + " | " + paciente.getEmail()));
     }
 
+    public List<Turno> obtenerTurnos() {
+        return new ArrayList<>(turnos);
+    }
+
     public List<Medico> obtenerMedicos() {
         return new ArrayList<>(medicos);
     }

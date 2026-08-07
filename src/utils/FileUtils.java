@@ -133,27 +133,34 @@ public class FileUtils {
 
     // Persistencia de turnos
 
-    public static void guardarTurno(Turno turno) {
-        String linea = String.join("|",
-                String.valueOf(turno.getIdTurno()),
-                turno.getFecha().toString(),
-                turno.getHora().toString(),
-                String.valueOf(turno.getMedico().getIdMedico()),
-                String.valueOf(turno.getPaciente().getIdPaciente()),
-                String.valueOf(turno.getEstadoTurno().name())
-        );
+    public static void guardarTurnos(List<Turno> turnos) {
+        StringBuilder contenido = new StringBuilder();
+
+        for (Turno turno : turnos) {
+            String linea = String.join("|",
+                    String.valueOf(turno.getIdTurno()),
+                    turno.getFecha().toString(),
+                    turno.getHora().toString(),
+                    String.valueOf(turno.getMedico().getIdMedico()),
+                    String.valueOf(turno.getPaciente().getIdPaciente()),
+                    turno.getEstadoTurno().name()
+            );
+
+            contenido.append(linea)
+                    .append(System.lineSeparator());
+        }
 
         try {
             Files.createDirectories(Paths.get("data"));
 
             Files.writeString(
                     Paths.get(RUTA_TURNOS),
-                    linea + System.lineSeparator(),
+                    contenido.toString(),
                     StandardOpenOption.CREATE,
-                    StandardOpenOption.APPEND
+                    StandardOpenOption.TRUNCATE_EXISTING
             );
         } catch (IOException e) {
-            System.out.println("Error al guardar el turno: " + e.getMessage());
+            System.out.println("Error al guardar los turnos: " + e.getMessage());
         }
     }
 

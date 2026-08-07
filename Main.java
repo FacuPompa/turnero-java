@@ -26,7 +26,7 @@ public class Main {
         FileUtils.leerTurnos(
             centroMedico.obtenerMedicos(),
             centroMedico.obtenerPacientes()
-            
+
         ).forEach(centroMedico::agregarTurno);
 
         while(true) {
@@ -103,7 +103,7 @@ public class Main {
 
                         try {
                             centroMedico.agregarTurno(turno);
-                            FileUtils.guardarTurno(turno);
+                            FileUtils.guardarTurnos(centroMedico.obtenerTurnos());
                         } catch (TurnoNoDisponibleException e) {
                             System.out.println(e.getMessage());
                         }
@@ -116,6 +116,7 @@ public class Main {
                     case CANCELAR_TURNO:
                         int idTurnoCancelar = ScannerUtils.leerEntero("Ingrese el ID del turno a cancelar");
                         if (centroMedico.cancelarTurno(idTurnoCancelar)) {
+                            FileUtils.guardarTurnos(centroMedico.obtenerTurnos());
                             System.out.println("Turno cancelado exitosamente.");
                         } else {
                             System.out.println("No se encontró un turno con el ID proporcionado.");
@@ -126,6 +127,7 @@ public class Main {
                         int idTurnoAtendido = ScannerUtils.leerEntero("Ingrese el ID del turno a marcar como atendido");
                         try {
                             if (centroMedico.marcarTurnoAtendido(idTurnoAtendido)) {
+                                FileUtils.guardarTurnos(centroMedico.obtenerTurnos());
                                 System.out.println("Turno marcado como atendido exitosamente.");
                             } else {
                                 System.out.println("No se encontró un turno con el ID proporcionado.");
