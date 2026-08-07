@@ -32,6 +32,18 @@ public class CentroMedico {
         pacientes.forEach(paciente -> System.out.println(paciente.getNombre() + " | " + paciente.getApellido() + " | " + paciente.getEmail()));
     }
 
+    public List<Turno> obtenerTurnos() {
+        return new ArrayList<>(turnos);
+    }
+
+    public List<Medico> obtenerMedicos() {
+        return new ArrayList<>(medicos);
+    }
+
+    public List<Paciente> obtenerPacientes() {
+        return new ArrayList<>(pacientes);
+    }
+
     public void agregarTurno(Turno turno) {
         boolean horarioOcupado = turnos.stream()
                 .anyMatch(t -> t.getFecha().equals(turno.getFecha())
