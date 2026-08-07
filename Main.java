@@ -1,6 +1,9 @@
 import java.time.*;
+import java.util.List;
+
 import src.classes.*;
 import src.enums.*;
+import src.utils.FileUtils;
 import src.utils.ScannerUtils;
 import src.exceptions.*;
 
@@ -18,7 +21,13 @@ public class Main {
     public static final int SALIR = 10;
     public static void main(String[] args) {
         CentroMedico centroMedico = new CentroMedico();
-        cargarDatosIniciales(centroMedico);
+        FileUtils.leerMedicos().forEach(centroMedico::agregarMedico);
+        FileUtils.leerPaciente().forEach(centroMedico::agregarPaciente);
+        FileUtils.leerTurnos(
+            centroMedico.obtenerMedicos(),
+            centroMedico.obtenerPacientes()
+            
+        ).forEach(centroMedico::agregarTurno);
 
         while(true) {
             System.out.println("\nBienvenido al centro medico.\n");
@@ -47,6 +56,7 @@ public class Main {
                         
                         Medico medico = new Medico(nombreMedico, apellidoMedico, especialidad, idMedico);
                         centroMedico.agregarMedico(medico);
+                        FileUtils.guardarMedico(medico);
 
                         System.out.println("Medico registrado exitosamente.");
                         break;
@@ -64,6 +74,7 @@ public class Main {
 
                         Paciente paciente = new Paciente(nombrePaciente, apellidoPaciente, emailPaciente, telefonoPaciente, idPaciente);
                         centroMedico.agregarPaciente(paciente);
+                        FileUtils.guardarPaciente(paciente);
 
                         System.out.println("Paciente registrado exitosamente.");
                         break;
@@ -92,6 +103,7 @@ public class Main {
 
                         try {
                             centroMedico.agregarTurno(turno);
+                            FileUtils.guardarTurno(turno);
                         } catch (TurnoNoDisponibleException e) {
                             System.out.println(e.getMessage());
                         }
@@ -135,15 +147,5 @@ public class Main {
                         break;
             }
         }
-    }
-
-    private static void cargarDatosIniciales(CentroMedico centroMedico) {
-        Medico medico = new Medico("Ana", "Gomez", Especialidad.CLINICA_MEDICA, 1);
-        Paciente paciente = new Paciente("Juan", "Perez", "juan.perez@email.com", "+54 9 266 4000000", 1);
-        Turno turno = new Turno(LocalDate.now(), LocalTime.of(17, 30), medico, paciente, 1);
-
-        centroMedico.agregarMedico(medico);
-        centroMedico.agregarPaciente(paciente);
-        centroMedico.agregarTurno(turno);
     }
 }
